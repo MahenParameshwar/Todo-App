@@ -2,6 +2,7 @@ const Bucket = require("../../Model/bucketModel");
 const getBucketListController = async (req, res) => {
   try {
     const { data: _id } = req.id;
+    console.log(_id);
     const data = await Bucket.find({
       user: _id,
     }).populate({
