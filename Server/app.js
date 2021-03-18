@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const registerRoute = require("./Routes/register");
 const loginRoute = require("./Routes/login");
 const bucketListRoute = require("./Routes/bucket");
+const todoRoute = require("./Routes/todo");
 
 const app = express();
 const port = 8000;
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api", registerRoute);
 app.use("/api", loginRoute);
 app.use("/api", bucketListRoute);
+app.use("/api", todoRoute);
 
 app.listen(process.env.PORT || 8000, () => {
   console.log("You are connected");

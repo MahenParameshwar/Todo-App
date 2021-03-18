@@ -7,7 +7,6 @@ const bucketSchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String, required: true },
     todos: [{ type: Schema.Types.ObjectId, ref: "Todo" }],
-
     allDone: { type: Boolean, default: false },
   },
   {
