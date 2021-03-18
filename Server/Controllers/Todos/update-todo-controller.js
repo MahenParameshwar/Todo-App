@@ -1,6 +1,6 @@
 const Bucket = require("../../Model/bucketModel");
 const Todo = require("../../Model/todoModel");
-const deleteTodoController = async (req, res, next) => {
+const updateTodoController = async (req, res, next) => {
   try {
     const { todoId } = req.params;
 
@@ -12,12 +12,6 @@ const deleteTodoController = async (req, res, next) => {
       { useFindAndModify: false, new: true }
     );
 
-    await Bucket.findByIdAndUpdate(
-      bucketId,
-      { $pull: { todos: todoId } },
-      { useFindAndModify: false, new: true }
-    );
-
     next();
   } catch (err) {
     return res.status(400).json({
@@ -26,4 +20,4 @@ const deleteTodoController = async (req, res, next) => {
   }
 };
 
-module.exports = deleteTodoController;
+module.exports = updateTodoController;
