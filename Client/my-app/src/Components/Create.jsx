@@ -2,10 +2,12 @@ import { Paper, Typography,makeStyles, fade, Collapse } from '@material-ui/core'
 import React, { useState } from 'react';
 import classNames from 'classnames'
 import InputCard from './InputCard';
+import BucketInputCard from './BucketInputCard';
 
 const useStyles = makeStyles((theme)=>({
     root:{
-        marginTop:theme.spacing(2)
+        marginTop:theme.spacing(2),
+      
     },
    addCard:{
        padding:theme.spacing(1,1,1,2),
@@ -17,13 +19,16 @@ const useStyles = makeStyles((theme)=>({
        }
    }
 }))
-function CreateTodo(props) {
+function Create({addBucket=false,label}) {
     const classes = useStyles();
     const [open,setOpen] = useState(false)
     return (
         <div className={classNames(classes.root)}>
             <Collapse in={open}>
-                <InputCard setOpen={setOpen} />
+                {
+                    addBucket ? <BucketInputCard setOpen={setOpen} /> : <InputCard setOpen={setOpen} />
+                }
+                
             </Collapse>
             <Collapse in={!open}>            
                 <Paper
@@ -32,13 +37,12 @@ function CreateTodo(props) {
                 onClick={()=>setOpen(true)}
                 >
                     <Typography>
-                    + Create a Todo
+                    + {label}
                     </Typography>
                 </Paper>
             </Collapse>
-
         </div>
     );
 }
 
-export default CreateTodo;
+export default Create;

@@ -1,14 +1,14 @@
 import React from 'react';
 import {Paper,CssBaseline,makeStyles} from '@material-ui/core'
 import Title from './Title';
-import Todo from './Todo/Todo';
-import CreateTodo from './Todo/CreateTodo';
+import Todo from './Todo';
+import Create from './Create';
 
 const useStyles = makeStyles((theme)=>({
     root:{
         width:'300px',
         backgroundColor:"#ebecf0",
-        marginLeft:theme.spacing(1)
+        margin:theme.spacing(1,1,1,1)
     }
 }))
 
@@ -23,7 +23,7 @@ function Bucket(props) {
                 <Todo/>
                 <Todo/>
                 <Todo/>
-                <CreateTodo />
+                <Create label="Create a Todo" />
             </Paper>
         </div>
     );
