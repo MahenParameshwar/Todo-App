@@ -1,14 +1,14 @@
 const Bucket = require("../../Model/bucketModel");
 const Todo = require("../../Model/todoModel");
-const deleteTodoController = async (req, res, next) => {
+const updateBucketListController = async (req, res, next) => {
   try {
-    const { todoId, bucketId } = req.query;
-
-    await Todo.findByIdAndDelete(todoId);
+    const { bucketId } = req.params;
 
     await Bucket.findByIdAndUpdate(
       bucketId,
-      { $pull: { todos: todoId } },
+      {
+        ...req.body,
+      },
       { useFindAndModify: false, new: true }
     );
 
@@ -20,4 +20,4 @@ const deleteTodoController = async (req, res, next) => {
   }
 };
 
-module.exports = deleteTodoController;
+module.exports = updateBucketListController;

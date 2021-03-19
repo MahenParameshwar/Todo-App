@@ -35,7 +35,7 @@ export const makeCreateBucketRequest = ({ token, title }) => (dispatch) => {
       }
     )
     .then((res) => {
-      dispatch(createBucketSuccess(res.data.bucketList));
+      dispatch(createBucketSuccess(res.data));
     })
     .catch((err) => {
       dispatch(createBucketFailure("Oops!! Somthing went wrong"));
@@ -72,7 +72,7 @@ export const makeGetBucketListRequest = ({ token }) => (dispatch) => {
       },
     })
     .then((res) => {
-      dispatch(getBucketSuccess(res.data.bucketList));
+      dispatch(getBucketSuccess(res.data));
     })
     .catch((err) => {
       dispatch(getBucketFailure("Oops!! Somthing went wrong"));
@@ -115,7 +115,7 @@ export const makeUpdateBucketListRequest = ({ token, bucketId, title }) => (
       }
     )
     .then((res) => {
-      dispatch(updateBucketSuccess(res.data.bucketList));
+      dispatch(updateBucketSuccess(res.data));
     })
     .catch((err) => {
       dispatch(updateBucketFailure("Oops!! Somthing went wrong"));
@@ -157,9 +157,137 @@ export const makeDeleteBucketListRequest = ({ token, bucketId }) => (
       }
     )
     .then((res) => {
-      dispatch(deleteBucketSuccess(res.data.bucketList));
+      dispatch(deleteBucketSuccess(res.data));
     })
     .catch((err) => {
       dispatch(deleteBucketFailure("Oops!! Somthing went wrong"));
+    });
+};
+
+function createTodoRequest() {
+  return {
+    type: actionConstants.CREATE_TODO_REQUEST,
+  };
+}
+
+function createTodoSuccess(response) {
+  return {
+    type: actionConstants.CREATE_TODO_SUCCESS,
+    payload: response,
+  };
+}
+
+function createTodoFailure(response) {
+  return {
+    type: actionConstants.CREATE_TODO_FAILURE,
+    payload: response,
+  };
+}
+
+export const makeCreateTodoRequest = ({ token, task, bucketId }) => (
+  dispatch
+) => {
+  dispatch(createTodoRequest());
+
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/createTodo/${bucketId}`,
+      { task },
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      dispatch(createTodoSuccess(res.data));
+    })
+    .catch((err) => {
+      dispatch(createTodoFailure("Oops!! Somthing went wrong"));
+    });
+};
+
+function updateTodoRequest() {
+  return {
+    type: actionConstants.UPDATE_TODO_REQUEST,
+  };
+}
+
+function updateTodoSuccess(response) {
+  return {
+    type: actionConstants.UPDATE_TODO_SUCCESS,
+    payload: response,
+  };
+}
+
+function updateTodoFailure(response) {
+  return {
+    type: actionConstants.UPDATE_TODO_FAILURE,
+    payload: response,
+  };
+}
+
+export const makeUpdateTodoRequest = ({ token, task, isDone, todoId }) => (
+  dispatch
+) => {
+  dispatch(updateTodoRequest());
+
+  axios
+    .put(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/updateTodo/${todoId}`,
+      { task, isDone },
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      dispatch(updateTodoSuccess(res.data));
+    })
+    .catch((err) => {
+      dispatch(updateTodoFailure("Oops!! Somthing went wrong"));
+    });
+};
+
+function deleteTodoRequest() {
+  return {
+    type: actionConstants.DELETE_TODO_REQUEST,
+  };
+}
+
+function deleteTodoSuccess(response) {
+  return {
+    type: actionConstants.DELETE_TODO_SUCCESS,
+    payload: response,
+  };
+}
+
+function deleteTodoFailure(response) {
+  return {
+    type: actionConstants.DELETE_TODO_FAILURE,
+    payload: response,
+  };
+}
+
+export const makeDeleteTodoRequest = ({ token, bucketId, todoId }) => (
+  dispatch
+) => {
+  dispatch(deleteTodoRequest());
+
+  axios
+    .delete(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/deleteTodo?bucketId=${bucketId}&todoId=${todoId}`,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      dispatch(deleteTodoSuccess(res.data));
+    })
+    .catch((err) => {
+      dispatch(deleteTodoFailure("Oops!! Somthing went wrong"));
     });
 };

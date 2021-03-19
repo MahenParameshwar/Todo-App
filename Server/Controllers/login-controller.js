@@ -24,20 +24,17 @@ const handleLogin = async (req, res) => {
       const accessToken = jwt.sign({ data: user._id }, process.env.SECRET_KEY, {
         expiresIn: "36000000s",
       });
-      res.status(200).json({
+      return res.status(200).json({
         token: accessToken,
       });
-      return;
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         error: true,
         success: false,
         message: "Wrong Password enterd",
       });
-      return;
     }
   } catch (err) {
-    console.log(err.message);
     res.status(400).json({
       error: true,
       success: false,

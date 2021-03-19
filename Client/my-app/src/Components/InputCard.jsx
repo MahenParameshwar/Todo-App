@@ -2,6 +2,8 @@ import { Button, IconButton, InputBase, Paper, makeStyles, fade} from '@material
 import ClearIcon from '@material-ui/icons/Clear'
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { makeCreateTodoRequest } from '../Redux/Bucket/action';
 
 const useStyles = makeStyles((theme)=>({
     card:{
@@ -25,16 +27,22 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 
-function InputCard({setOpen}) {
+function InputCard({setOpen,bucketId}) {
     const classes = useStyles();
-    const [text,setText] = useState("");
-    
+    const [task,setTask] = useState("");
+    const dispatch = useDispatch();
+    const token = localStorage.getItem("token")
     const handleInputChange = e=>{
-        setText(e.target.value)
+        setTask(e.target.value)
     }
 
     const handleSubmit = (e)=>{
         e.preventDefault()
+        dispatch(makeCreateTodoRequest({
+            token,task,bucketId
+        }))
+        setOpen(false);
+        setTask("")
     }
     
     return (
@@ -45,7 +53,7 @@ function InputCard({setOpen}) {
                         <InputBase  multiline fullWidth inputProps={{
                             className:classes.input,
                         }}
-                        value={text}
+                        value={task}
                         placeholder="add a todo"
                         autoFocus={true}
                         onChange={handleInputChange}

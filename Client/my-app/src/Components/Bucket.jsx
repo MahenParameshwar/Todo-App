@@ -36,9 +36,9 @@ function Bucket({title,todos,_id,handleUpdate,parentClass}) {
                 <CssBaseline/>
                 <Title text={text} setText={setText} title={title} editTitle={editTitle} setEditTitle={setEditTitle}/>
                 {
-                    todos.map(({_id,task})=><Todo key={_id} task={task}/>)
+                    todos.map(({_id,task,isDone,bucket})=><Todo key={_id} task={task} _id={_id} bucket={bucket} isDone={isDone}/>)
                 }
-                <Create label="Create a Todo" />
+                <Create bucketId={_id} label="Create a Todo" />
                 
             </Paper>
            
@@ -49,8 +49,9 @@ function Bucket({title,todos,_id,handleUpdate,parentClass}) {
                             editTitle ? 
                                         <>
                                         <IconButton onClick={()=>{
+                                        
                                             setEditTitle(false)
-                                            handleUpdate(_id,text)}}  
+                                            text && handleUpdate(_id,text)}}  
                                             className={classNames( parentClass.button,parentClass.editbutton)}>
                                             <SaveIcon />
                                         </IconButton>

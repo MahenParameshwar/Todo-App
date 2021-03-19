@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme)=>({
        }
    }
 }))
-function Create({addBucket=false,label}) {
+function Create({addBucket=false,label,bucketId}) {
     const classes = useStyles();
     const [open,setOpen] = useState(false)
     return (
         <div className={classNames(classes.root)}>
             <Collapse in={open}>
                 {
-                    addBucket ? <BucketInputCard setOpen={setOpen} /> : <InputCard setOpen={setOpen} />
+                    addBucket ? <BucketInputCard setOpen={setOpen} /> : <InputCard bucketId={bucketId} setOpen={setOpen} />
                 }
                 
             </Collapse>

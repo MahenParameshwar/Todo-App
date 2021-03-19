@@ -7,6 +7,7 @@ import Create from '../Components/Create';
 import Loader from '../Components/Loader';
 import {makeDeleteBucketListRequest, makeGetBucketListRequest, makeUpdateBucketListRequest} from '../Redux/Bucket/action'
 import DeleteIcon from '@material-ui/icons/Delete';
+import Header from '../Components/Header';
 
 
 const useStyles = makeStyles(theme=>({
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme=>({
     button:{
         position:"absolute",
         zIndex:"1",
-        top:"-5%",
+        top:"0",
         right:"0",
         backgroundColor:"#5AAC44",
         transform:"scale(0.7)",
@@ -70,6 +71,7 @@ function Home(props) {
     
        <>
        {isLoading && <Loader/>}
+       <Header />
         <div className={classes.container}>
             
             <Grid spacing={2}  container  >
