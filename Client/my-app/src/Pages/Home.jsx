@@ -1,10 +1,10 @@
 import React from 'react';
-import Todo from '../Components/Todo';
+import Bucket from '../Components/Bucket';
 
 function Home(props) {
     return (
         <div>
-           <Todo />
+           <Bucket />
         </div>
     );
 }

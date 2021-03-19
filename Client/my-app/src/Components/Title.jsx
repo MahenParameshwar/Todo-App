@@ -1,6 +1,6 @@
 import { InputBase, Typography,makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-
+import Classname from 'classnames'
 
 const useStyles = makeStyles((theme)=>({
     editableTitleContainer:{
@@ -8,7 +8,11 @@ const useStyles = makeStyles((theme)=>({
         display:'flex'
     },
     editableTitle:{
-        flexGrow:1
+        flexGrow:1,
+    },
+    textStyle:{
+        fontSize:"1.2rem",
+        fontWeight:"bold"
     },
     input:{
         margin:theme.spacing(1),
@@ -28,7 +32,8 @@ function Title(props) {
 
             open ? 
                 <div>
-                    <InputBase value="todo" 
+                    <InputBase value="Todo" 
+                    className={Classname(classes.textStyle)}
                     inputProps={{
                         className:classes.input
                     }} 
@@ -39,7 +44,7 @@ function Title(props) {
                 </div>
             :
                 <div className={classes.editableTitleContainer}>
-                        <Typography className={classes.editableTitle} onClick={()=>setOpen(true)}>
+                        <Typography className={Classname(classes.editableTitle,classes.textStyle)} onClick={()=>setOpen(true)}>
                             Todo
                         </Typography>
                 </div>
