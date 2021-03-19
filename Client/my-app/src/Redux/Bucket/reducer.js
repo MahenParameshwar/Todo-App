@@ -5,6 +5,12 @@ import {
   GET_BUCKET_LIST_REQUEST,
   GET_BUCKET_LIST_FAILURE,
   GET_BUCKET_LIST_SUCCESS,
+  DELETE_BUCKET_LIST_REQUEST,
+  DELETE_BUCKET_LIST_FAILURE,
+  DELETE_BUCKET_LIST_SUCCESS,
+  UPDATE_BUCKET_LIST_FAILURE,
+  UPDATE_BUCKET_LIST_SUCCESS,
+  UPDATE_BUCKET_LIST_REQUEST,
 } from "./actionConstants";
 
 const initState = {
@@ -48,6 +54,44 @@ export const bucketListReducer = (state = initState, { type, payload }) => {
         message: payload,
       };
     case GET_BUCKET_LIST_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        isLoading: false,
+        bucketList: payload,
+      };
+    case DELETE_BUCKET_LIST_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case DELETE_BUCKET_LIST_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+        message: payload,
+      };
+    case DELETE_BUCKET_LIST_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        isLoading: false,
+        bucketList: payload,
+      };
+    case UPDATE_BUCKET_LIST_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case UPDATE_BUCKET_LIST_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+        message: payload,
+      };
+    case UPDATE_BUCKET_LIST_SUCCESS:
       return {
         ...state,
         success: true,

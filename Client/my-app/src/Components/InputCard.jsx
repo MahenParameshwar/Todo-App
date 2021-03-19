@@ -27,15 +27,19 @@ const useStyles = makeStyles((theme)=>({
 
 function InputCard({setOpen}) {
     const classes = useStyles();
-    const {text,setText} = useState("");
+    const [text,setText] = useState("");
     
     const handleInputChange = e=>{
         setText(e.target.value)
     }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+    }
     
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div >
                     <Paper className={classNames(classes.card)}>
                         <InputBase  multiline fullWidth inputProps={{
@@ -45,11 +49,12 @@ function InputCard({setOpen}) {
                         placeholder="add a todo"
                         autoFocus={true}
                         onChange={handleInputChange}
+                        required
                         />
                     </Paper>
                 </div>
                 <div className={classNames(classes.addBtnContainer)}>
-                    <Button className={classNames(classes.addButton)}>
+                    <Button type="submit" className={classNames(classes.addButton)}>
                         Add Todo
                     </Button>
                     <IconButton onClick={()=>setOpen(false)}>

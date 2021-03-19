@@ -1,42 +1,89 @@
-import { Grid ,makeStyles} from '@material-ui/core';
+import { Grid ,makeStyles,IconButton,fade} from '@material-ui/core';
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Bucket from '../Components/Bucket';
 import Create from '../Components/Create';
 import Loader from '../Components/Loader';
-import {makeGetBucketListRequest} from '../Redux/Bucket/action'
+import {makeDeleteBucketListRequest, makeGetBucketListRequest, makeUpdateBucketListRequest} from '../Redux/Bucket/action'
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const useStyles = makeStyles(theme=>({
     container:{
-        padding:"4vw",
-       
+        padding:"4vw",     
+    },
+    bucket:{
+        position:'relative',
+        "&:hover":{
+            "& $button":{
+                display:'block'
+            }
+        }
+    },
+    button:{
+        position:"absolute",
+        zIndex:"1",
+        top:"-5%",
+        right:"0",
+        backgroundColor:"#5AAC44",
+        transform:"scale(0.7)",
+        display:"none",
+        "&:hover":{
+            backgroundColor:fade("#5AAC44",0.25),
             
+          }
+    },
+    editbutton:{
+        right:"15%",
+    },
+    closebutton:{
+        right:"30%"
     }
 }))
 function Home(props) {
 
     const classes = useStyles();
     const {bucketList,isLoading} = useSelector(state=>state.bucketList)
+   
+    
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(makeGetBucketListRequest({token}))
     },[])
    
-    return (
-       
+    const handleDelete = (bucketId)=>{
+        
+        dispatch(makeDeleteBucketListRequest({
+            token,
+            bucketId
+        }))
+    }
 
-        isLoading ? <Loader /> :
-       
+    const handleUpdate = useCallback((bucketId,title)=>{
+        dispatch(makeUpdateBucketListRequest({
+            token,bucketId,title
+        }))
+    },[])
+    return (
+    
+       <>
+       {isLoading && <Loader/>}
         <div className={classes.container}>
-            <Grid container  >
+            
+            <Grid spacing={2}  container  >
               
                {
                    bucketList.map(bucket =>  
-                   <Grid key={bucket._id} item  lg={3} md={4} sm={6} xs={12}>
-                        <Bucket title={bucket.title} todos={bucket.todos} />
+                   <Grid className={classes.bucket} key={bucket._id} item  lg={3} md={4} sm={6} xs={12}>
+                        <Bucket parentClass={classes} handleUpdate={handleUpdate} _id={bucket._id}  title={bucket.title} todos={bucket.todos} />
+                        
+                        <IconButton onClick={()=>handleDelete(bucket._id)}  className={classNames( classes.button)}>
+                           <DeleteIcon />
+                        </IconButton>
+                      
+                        
                     </Grid>)
                }
                 <Grid item  lg={3} md={4} sm={6} xs={12}>
@@ -47,6 +94,7 @@ function Home(props) {
                 </Grid>
             </Grid> 
         </div>
+        </>
 
        
     );

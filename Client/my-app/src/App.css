@@ -9,7 +9,6 @@ body{
 }
 
 .center {
-
     z-index: 100;
     position: fixed;
     display: flex;

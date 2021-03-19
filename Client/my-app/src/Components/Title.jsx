@@ -23,17 +23,18 @@ const useStyles = makeStyles((theme)=>({
     
 }))
 
-function Title({title}) {
-    const [open,setOpen] = useState(false);
-    const [text,setText] = useState(title)
+function Title({title,editTitle,setEditTitle,text,setText}) {
+    
+    
     const classes = useStyles()
+    
     return (
         <div>
             {
 
-            open ? 
+            editTitle ? 
                 <div>
-                    <InputBase value={title}
+                    <InputBase value={text}
                     className={Classname(classes.textStyle)}
                     inputProps={{
                         className:classes.input
@@ -41,13 +42,13 @@ function Title({title}) {
                     onChange={(e)=>setText(e.target.value)} 
                     fullWidth
                     autoFocus
-                   
-                    onBlur={()=>setOpen(false)}
+                    required
+                    
                     />
                 </div>
             :
                 <div className={classes.editableTitleContainer}>
-                        <Typography className={Classname(classes.editableTitle,classes.textStyle)} onClick={()=>setOpen(true)}>
+                        <Typography className={Classname(classes.editableTitle,classes.textStyle)}>
                             {title}
                         </Typography>
                 </div>
