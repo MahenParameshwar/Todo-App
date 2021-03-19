@@ -3,6 +3,8 @@ import {Paper,makeStyles,InputBase, IconButton, Box, fade} from '@material-ui/co
 import classNames from 'classnames'
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -17,22 +19,39 @@ const useStyles = makeStyles((theme)=>({
         cursor:"pointer",
         position:"relative",
         "&:hover":{
-          "& $updateButton":{
+          "& $button":{
                 display:"block"
             }
         }
     },
-    updateButton:{
+    button:{
         position:"absolute",
         top:"-50%",
         right:"0",
         backgroundColor:"#5AAC44",
         transform:"scale(0.7)",
+     
         display:"none",
        
         "&:hover":{
-            backgroundColor:fade("#5AAC44",0.25)
+            backgroundColor:fade("#5AAC44",0.25),
+            
           }
+    },
+    editBtn:{
+        right:"15%"
+    },
+    doneBtn:{
+        right:"30%",
+        backgroundColor:"white",
+        border:"1px solid #5AAC44",
+        "&:hover":{
+            backgroundColor:fade("#000",0.25),
+            
+          }
+    },
+    task:{
+        textDecoration:"line-through"
     }
    
     
@@ -57,7 +76,7 @@ function Todo(props) {
                     autoFocus
                     onBlur={()=>setOpen(false)}
                     />
-                    <IconButton className={classes.updateButton}>
+                    <IconButton className={classNames( classes.button)}>
                         <SaveIcon />
                     </IconButton>
                  </Paper>
@@ -65,11 +84,17 @@ function Todo(props) {
          :
              <div >
                      <Paper className={classes.card}>
-                        <Box onClick={()=>setOpen(true)}>
-                            Todo
+                        <Box className={classes.task} >
+                        <span >&#10003;</span> Todo
                         </Box>
-                        <IconButton className={classes.updateButton}>
+                        <IconButton className={classNames( classes.button,classes.doneBtn)}>
+                           <DoneIcon />
+                        </IconButton>
+                        <IconButton className={classNames( classes.button)}>
                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton onClick={()=>setOpen(true)} className={classNames( classes.button,classes.editBtn)}>
+                           <EditIcon />
                         </IconButton>
                     </Paper>
              </div>
