@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl,Select,InputLabel,MenuItem} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 function Options({handleChange}) {
+   const [value,setValue] = useState('');
+    const {bucketList} = useSelector(state=>state.bucketList)
+   
+    useEffect(()=>{
+    handleChange(value)
+   },[value])
    
     return (
         <div >
@@ -10,10 +17,13 @@ function Options({handleChange}) {
                         <Select 
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        onChange={handleChange}
+                        onChange={(e)=>{
+                            setValue(e.target.value)
+                        }}
                         style={{
                             margin:"10px",
                         }}
+                        value={value}
                         label="Options"
                         >
                            

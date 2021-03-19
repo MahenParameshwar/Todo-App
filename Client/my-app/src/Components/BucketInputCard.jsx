@@ -1,7 +1,9 @@
 import { Button, IconButton, InputBase, Paper, makeStyles, fade,FormControl,Select,InputLabel,MenuItem} from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear'
 import classNames from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { makeCreateBucketRequest } from '../Redux/Bucket/action';
 import Options from './Options';
 
 const useStyles = makeStyles((theme)=>({
@@ -37,41 +39,68 @@ const useStyles = makeStyles((theme)=>({
 }))
 function BucketInputCard({setOpen}) {
     const classes = useStyles();
-    const [option, setOption] = React.useState('');
-    const handleChange = (event) => {
-        setOption(event.target.value);
-      };
+    const [option, setOption] = useState("");
+    const [title,setTitle] = useState("");
+    const dispatch = useDispatch()
+    const token = localStorage.getItem("token")
+    
+    const handleChange = (value) => {
+        if(value!=='custom'){
+            setTitle(value)
+        }
+        else
+        setOption(value);
+        
+    };
+
+    const handleInputChange = e => {
+        setTitle(e.target.value)
+    }
+
+    const handleSubmit = e =>{
+        e.preventDefault()
+        dispatch(makeCreateBucketRequest({
+            token,
+            title
+        }))
+        setTitle("")
+    }
+    
     return (
         <div>
-            <div >
-                <Paper className={classNames(classes.card)}>
-                    {
-                        option === 'custom' ?  
-                        <>
-                        <InputBase   fullWidth inputProps={{
-                                                className:classes.input, 
-                                                 }}
-                        placeholder="add a bucket"
-                        autoFocus={true}
-                        />
-                         <IconButton className={classNames(classes.closeOption)} onClick={()=>setOption("")}>
-                            <ClearIcon/>
-                        </IconButton>
-                        </>
-                        :    <Options handleChange={handleChange} />
-                    }
-                 
-                   
-                </Paper>
-            </div>
-            <div className={classNames(classes.addBtnContainer)}>
-                <Button className={classNames(classes.addButton)}>
-                    Add Bucket
-                </Button>
-                <IconButton onClick={()=>setOpen(false)}>
-                    <ClearIcon/>
-                </IconButton>
-            </div>
+            <form onSubmit={handleSubmit}>
+                <div >
+                    <Paper className={classNames(classes.card)}>
+                        {
+                            option === 'custom' ?  
+                            <>
+                            <InputBase value={title}  
+                            onChange={handleInputChange}
+                            fullWidth 
+                            inputProps={{className:classes.input, }}
+                            placeholder="add a bucket"
+                            autoFocus={true}
+                            required
+                            />
+                            <IconButton className={classNames(classes.closeOption)} onClick={()=>setOption("")}>
+                                <ClearIcon/>
+                            </IconButton>
+                            </>
+                            :    <Options setTitle={setTitle} handleChange={handleChange} />
+                        }
+                    
+                    
+                    </Paper>
+                </div>
+                <div className={classNames(classes.addBtnContainer)}>
+                    <Button type="submit" className={classNames(classes.addButton)}>
+                        Add Bucket
+                    </Button>
+                    <IconButton onClick={()=>setOpen(false)}>
+                        <ClearIcon/>
+                    </IconButton>
+                </div>
+            </form>
         </div>
     );
 }

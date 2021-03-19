@@ -12,17 +12,16 @@ const useStyles = makeStyles((theme)=>({
     }
 }))
 
-function Bucket(props) {
+function Bucket({title,todos}) {
     const classes = useStyles();
     return (
         <div>
             <Paper className={classes.root}>
                 <CssBaseline/>
-                <Title/>
-                <Todo/>
-                <Todo/>
-                <Todo/>
-                <Todo/>
+                <Title title={title}/>
+                {
+                    todos.map(({_id,task})=><Todo key={_id} task={task}/>)
+                }
                 <Create label="Create a Todo" />
             </Paper>
         </div>

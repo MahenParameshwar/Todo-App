@@ -57,9 +57,10 @@ const useStyles = makeStyles((theme)=>({
     
 }))
 
-function Todo(props) {
+function Todo({task}) {
     const classes = useStyles();
     const [open,setOpen] = useState(false);
+    const [text,setText] = useState(task);
     return (
          <div>
          {
@@ -67,7 +68,10 @@ function Todo(props) {
          open ? 
              <div className={classes.todoContainer}>
                  <Paper className={classes.card}>
-                    <InputBase value="Todo" 
+                    <InputBase value={text}
+                    onChange={(e)=>{
+                        setText(e.target.value)
+                    }} 
                     className={classNames(classes.input)}
                     inputProps={{
                         className:classes.input
@@ -85,7 +89,7 @@ function Todo(props) {
              <div >
                      <Paper className={classes.card}>
                         <Box className={classes.task} >
-                        <span >&#10003;</span> Todo
+                        <span >&#10003;</span> {task}
                         </Box>
                         <IconButton className={classNames( classes.button,classes.doneBtn)}>
                            <DoneIcon />
