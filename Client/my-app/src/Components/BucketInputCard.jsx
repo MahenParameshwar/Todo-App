@@ -45,7 +45,7 @@ function BucketInputCard({setOpen}) {
     const token = localStorage.getItem("token")
     
     const handleChange = (value) => {
-        if(value!=='custom'){
+        if(value !== 'custom'){
             setTitle(value)
         }
         else
@@ -94,7 +94,7 @@ function BucketInputCard({setOpen}) {
                 </div>
                 <div className={classNames(classes.addBtnContainer)}>
                     <Button type="submit" className={classNames(classes.addButton)}>
-                        Add Bucket
+                        ADD BUCKET
                     </Button>
                     <IconButton onClick={()=>setOpen(false)}>
                         <ClearIcon/>

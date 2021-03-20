@@ -66,7 +66,7 @@ function Register(props) {
       };
 
     return (
-      token ? <Redirect to="/" /> :
+      token ? <Redirect to="/home" /> :
         <LoginLayout>
             <div className={styles.loginContainer}>
                 <h1>

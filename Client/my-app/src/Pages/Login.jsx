@@ -32,7 +32,7 @@ function Login(props) {
 
     useEffect(()=>{
         if(success){
-            history.push('/')
+            history.push('/home')
         }
         dispatch(loginErrorSuccessReset())
     },[success])
@@ -54,7 +54,7 @@ function Login(props) {
         }
 
     return (
-        token ? <Redirect to="/" /> :
+        token ? <Redirect to="/home" /> :
         <LoginLayout>
             {isLoading && <Loader />}
             <div className={styles.loginContainer}>
@@ -62,11 +62,11 @@ function Login(props) {
                     Login
                 </h1>
                 <form className={styles.form} onSubmit={handleLogin}>
-                    <input value={email} onChange={(event)=>setEmail(event.target.value)}
+                    <input className="loginEmail" value={email} onChange={(event)=>setEmail(event.target.value)}
                      type="email" placeholder="Email" required/>
-                    <input value={password} onChange={(event)=>setPassword(event.target.value)}
+                    <input className="loginPassword" value={password} onChange={(event)=>setPassword(event.target.value)}
                     type="password" placeholder="Password" required/>
-                    <input type="submit" value="Login"/>
+                    <input  type="submit" value="Login"/>
                 </form>
                 <Link to="/register">
                     Need an account? Register here.

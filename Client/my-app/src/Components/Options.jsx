@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 function Options({handleChange}) {
    const [value,setValue] = useState('');
     const {bucketList} = useSelector(state=>state.bucketList)
-   
+    let arr = bucketList.map(({title})=>title)
+    arr = Array.from(new Set(arr))
+    
+
     useEffect(()=>{
     handleChange(value)
    },[value])
@@ -15,6 +18,7 @@ function Options({handleChange}) {
             <FormControl variant="outlined"  fullWidth>
                         <InputLabel id="demo-simple-select-outlined-label">Options</InputLabel>
                         <Select 
+                        className="options"
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         onChange={(e)=>{
@@ -27,7 +31,7 @@ function Options({handleChange}) {
                         label="Options"
                         >
                            {
-                               bucketList?.map(({_id,title}) => <MenuItem key={_id} value={title}>{title}</MenuItem>)
+                               arr?.map((title,index) => <MenuItem key={index} value={title}>{title}</MenuItem>)
                            }
                            
                             <MenuItem value="custom">

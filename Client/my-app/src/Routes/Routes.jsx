@@ -12,7 +12,7 @@ function Routes(props) {
         <Switch>
             <Route path="/login" exact render={()=><Login/>} />
             <Route path="/register" exact render={()=><Register/>} />
-            <PrivateRoute path="/" exact Component={Home} />
+            <PrivateRoute path="/home" exact Component={Home} />
            
             
         </Switch>
