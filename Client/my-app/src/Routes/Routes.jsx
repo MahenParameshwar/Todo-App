@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch,Redirect } from 'react-router-dom';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 
@@ -13,7 +13,9 @@ function Routes(props) {
             <Route path="/login" exact render={()=><Login/>} />
             <Route path="/register" exact render={()=><Register/>} />
             <PrivateRoute path="/home" exact Component={Home} />
-           
+            <Route  render={() => (
+                <Redirect to="/login"/>
+                )}/>
             
         </Switch>
     );
